@@ -26,10 +26,7 @@ class QwenImagePachifier(ConfigMixin):
     config_name = "config.json"
 
     @register_to_config
-    def __init__(
-        self,
-        patch_size: int = 2,
-    ):
+    def __init__(self, patch_size: int = 2):
         super().__init__()
 
     def pack_latents(self, latents):
@@ -196,3 +193,13 @@ class QwenImageEditModularPipeline(ModularPipeline, QwenImageLoraLoaderMixin):
             requires_unconditional_embeds = self.guider._enabled and self.guider.num_conditions > 1
 
         return requires_unconditional_embeds
+
+
+class QwenImageEditPlusModularPipeline(QwenImageEditModularPipeline):
+    """
+    A ModularPipeline for QwenImage-Edit Plus.
+
+    > [!WARNING] > This is an experimental feature and is likely to change in the future.
+    """
+
+    default_blocks_name = "QwenImageEditPlusAutoBlocks"
